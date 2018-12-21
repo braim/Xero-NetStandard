@@ -10,8 +10,7 @@ namespace Xero.Api.Example.MVC.Controllers
 {
     public class ContractorsController : Controller
     {
-     
-            public ActionResult Index()
+        public ActionResult Index()
             {
                 var api = XeroApiHelper.AuPayrollApi();
 
@@ -22,9 +21,9 @@ namespace Xero.Api.Example.MVC.Controllers
 
                 //   var organisation = api.FindOrganisationAsync().Result;
              
-                    var organisation = api.Employees.FindAsync().Result;
+                    var list = api.Employees.FindAsync().Result;
 
-                    return View(organisation);
+                    return View(list);
                 }
                 catch (RenewTokenException e)
                 {
@@ -47,7 +46,6 @@ namespace Xero.Api.Example.MVC.Controllers
 
             return total;
         }
-
         private int GetTotalInvoiceCount(Core.IXeroCoreApi _api)
         {
             int count = _api.Invoices.FindAsync().Result.Count();
@@ -90,6 +88,27 @@ namespace Xero.Api.Example.MVC.Controllers
             lines.Add(String.Format("There are {0} tracking categories", _api.TrackingCategories.FindAsync().Result.Count()));
             lines.Add(String.Format("There are {0} users", _api.Users.FindAsync().Result.Count()));
             return View(lines);
+        }
+
+
+        [HttpGet]
+        [Route("Contractors/Contractor/{id}")]
+        public ActionResult GetContractor(string id)
+        {
+            var api = XeroApiHelper.AuPayrollApi();
+            try
+            {
+                //   var organisation = api.FindOrganisationAsync().Result;
+
+                var list = api.Employees.FindAsync(id).Result;
+
+                return View("./Contractor",list);
+            }
+            catch (RenewTokenException e)
+            {
+                Console.WriteLine(e);
+                return RedirectToAction("Connect", "Home");
+            }
         }
     }
     

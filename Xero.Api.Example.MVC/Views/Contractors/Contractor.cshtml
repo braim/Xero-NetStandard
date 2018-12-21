@@ -1,0 +1,29 @@
+﻿@model Xero.Api.Payroll.Australia.Model.Employee
+@{
+    ViewBag.Title = "Contractor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Contractor</h2>
+
+
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">
+                @Html.DisplayFor(modelItem => Model.LastName)
+                <br>
+                @Html.DisplayFor(modelItem => Model.FirstName)
+
+
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+                @Html.DisplayFor(modelItem => Model.Status)
+            </h6>
+            <p class="card-text">
+                @Html.DisplayFor(modelItem => Model.ValidationStatus)
+
+            </p>
+
+        </div>
+    </div>
+    

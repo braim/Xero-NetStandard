@@ -11,7 +11,7 @@
     <div class="card" style="width: 18rem;">
         <div class="card-body">
             <h5 class="card-title">
-                @Html.DisplayFor(modelItem => item.LastName) 
+                @Html.DisplayFor(modelItem => item.LastName)
                 <br>
                 @Html.DisplayFor(modelItem => item.FirstName)
 
@@ -25,7 +25,11 @@
 
             </p>
             <a href="#" class="card-link">Some Action</a>
-            <a href="#" class="card-link">More Info</a>
+            @Html.ActionLink("More", "Contractor", "Contractors", new
+    {
+        id = item.Id
+    });
+
         </div>
     </div>
     
