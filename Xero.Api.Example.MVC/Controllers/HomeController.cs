@@ -24,7 +24,7 @@ namespace Xero.Api.Example.MVC.Controllers
             return View();
         }
 
-        public async Task<ActionResult> Connect()
+        public async Task<ActionResult> Connect_Old()
         {
             var authorizeUrl = await _authenticator.GetRequestTokenAuthorizeUrlAsync(_user.Identifier);
 
@@ -38,6 +38,12 @@ namespace Xero.Api.Example.MVC.Controllers
                 return View("NoAuthorized");
 
             return View(accessToken);
+        }
+        public async Task<ActionResult> Connect()
+        {
+            var authorizeUrl = await ((Authenticators.PublicMvcAuthenticator)_authenticator).GetRequestTokenAuthorizeUrlAsync(_user.Identifier, "payroll.employees,payroll.payitems,payroll.leaveapplications");
+
+            return Redirect(authorizeUrl);
         }
     }
 }

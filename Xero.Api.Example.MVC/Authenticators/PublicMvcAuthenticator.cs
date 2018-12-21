@@ -48,6 +48,20 @@ namespace Xero.Api.Example.MVC.Authenticators
             return GetAuthorizeUrl(requestToken);
         }
 
+        public async Task<string> GetRequestTokenAuthorizeUrlAsync(string userId,string scope)
+        {
+            var requestToken = await GetRequestTokenAsync(_consumer);
+            requestToken.UserId = userId;
+
+            var existingToken = await _requestTokenStore.FindAsync(userId);
+            if (existingToken != null)
+                await _requestTokenStore.DeleteAsync(requestToken);
+
+            await _requestTokenStore.AddAsync(requestToken);
+
+            return GetAuthorizeUrl(requestToken,scope);
+        }
+
         public async Task<IToken> RetrieveAndStoreAccessTokenAsync(string userId, string tokenKey, string verifier)
         {
             var existingAccessToken = await Store.FindAsync(userId);

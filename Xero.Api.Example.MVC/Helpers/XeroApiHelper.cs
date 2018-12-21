@@ -56,5 +56,10 @@ namespace Xero.Api.Example.MVC.Helpers
         {
             return new XeroCoreApi(_authenticator as IAuthenticator, User());
         }
+
+        public static Payroll.AustralianPayroll AuPayrollApi()
+        {
+            return new Payroll.AustralianPayroll(_authenticator as IAuthenticator, User());
+        }
     }
 }

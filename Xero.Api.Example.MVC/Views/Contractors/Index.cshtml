@@ -1,0 +1,32 @@
+﻿@model List<Xero.Api.Payroll.Australia.Model.Employee>
+@{
+    ViewBag.Title = "Contractors";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Contractors</h2>
+
+@foreach (var item in Model)
+{
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">
+                @Html.DisplayFor(modelItem => item.LastName) 
+                <br>
+                @Html.DisplayFor(modelItem => item.FirstName)
+
+
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+                @Html.DisplayFor(modelItem => item.Status)
+            </h6>
+            <p class="card-text">
+                @Html.DisplayFor(modelItem => item.ValidationStatus)
+
+            </p>
+            <a href="#" class="card-link">Some Action</a>
+            <a href="#" class="card-link">More Info</a>
+        </div>
+    </div>
+    
+}
