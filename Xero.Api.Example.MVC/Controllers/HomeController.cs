@@ -41,7 +41,8 @@ namespace Xero.Api.Example.MVC.Controllers
         }
         public async Task<ActionResult> Connect()
         {
-            var authorizeUrl = await ((Authenticators.PublicMvcAuthenticator)_authenticator).GetRequestTokenAuthorizeUrlAsync(_user.Identifier, "payroll.employees,payroll.payitems,payroll.leaveapplications");
+            var authorizeUrl = await ((Authenticators.PublicMvcAuthenticator)_authenticator).GetRequestTokenAuthorizeUrlAsync(_user.Identifier,
+            "payroll.employees,payroll.payitems,payroll.leaveapplications,payroll.payruns");
 
             return Redirect(authorizeUrl);
         }

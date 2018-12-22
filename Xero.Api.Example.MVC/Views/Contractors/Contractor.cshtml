@@ -1,29 +1,127 @@
-﻿@model Xero.Api.Payroll.Australia.Model.Employee
+﻿
 @{
     ViewBag.Title = "Contractor";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Contractor</h2>
+<h2>
+    @ViewBag.Employee.LastName
+    <br>
+    @ViewBag.Employee.FirstName
+</h2>
+
+<div class="card" >
+    <div class="card-body">
+        <h5 class="card-title">
+
+            General
 
 
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">
-                @Html.DisplayFor(modelItem => Model.LastName)
-                <br>
-                @Html.DisplayFor(modelItem => Model.FirstName)
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted"></h6>
+        <p class="card-text">
+            Calendar:   @ViewBag.Employee.PayrollCalendarID -  @ViewBag.Employee.PayrollCalendarName
+
+        </p>
+
+        <p class="card-text">
+            EG: @ViewBag.Employee.EmployeeGroupName
 
 
-            </h5>
-            <h6 class="card-subtitle mb-2 text-muted">
-                @Html.DisplayFor(modelItem => Model.Status)
-            </h6>
-            <p class="card-text">
-                @Html.DisplayFor(modelItem => Model.ValidationStatus)
+        </p>
 
-            </p>
-
-        </div>
+        Contact ID: @ViewBag.Contact.Id
     </div>
-    
+</div>
+
+<div class="card" >
+    <div class="card-body">
+        <h5 class="card-title">
+
+            Super
+
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted"></h6>
+
+
+
+        <p class="card-text">
+            Super Expense Account Code = @ViewBag.Employee.PayTemplate.SuperLines[0].ExpenseAccountCode
+        </p>
+
+        <p class="card-text">
+            Super Liability Account Code = @ViewBag.Employee.PayTemplate.SuperLines[0].LiabilityAccountCode
+
+        </p>
+
+    </div>
+</div>
+
+<div class="card" >
+    <div class="card-body">
+        <h5 class="card-title">
+
+            Earn Rate
+
+
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+            Earning Rate ID = @ViewBag.Employee.PayTemplate.EarningsLines[0].EarningsRateId
+        </h6>
+        <p class="card-text">
+            Rate Per Unit -  @ViewBag.EarnRate.RatePerUnit
+        </p>
+
+        <p class="card-text">
+            Account Code -  @ViewBag.EarnRate.AccountCode
+
+
+        </p>
+
+
+
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">
+
+            Pay Runs
+
+
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+            pay runs
+        </h6>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">NetPay</th>
+                    <th scope="col">Super</th>
+                    <th scope="col">Tax</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.PayRuns)
+    {
+            <tr>
+                <th scope="row">@item.PaymentDate.ToString("yyyy-MM-dd")</th>
+                <td> @item.NetPay</td>
+                <td>@item.Super</td>
+                <td>@item.Tax</td>
+            </tr>
+
+}
+                </tbody>
+</table>
+
+
+</div>
+</div>
+
+
+

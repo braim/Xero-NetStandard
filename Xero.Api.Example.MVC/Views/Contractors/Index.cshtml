@@ -8,7 +8,7 @@
 
 @foreach (var item in Model)
 {
-    <div class="card" style="width: 18rem;">
+    <div class="card">
         <div class="card-body">
             <h5 class="card-title">
                 @Html.DisplayFor(modelItem => item.LastName)
@@ -25,10 +25,10 @@
 
             </p>
             <a href="#" class="card-link">Some Action</a>
-            @Html.ActionLink("More", "Contractor", "Contractors", new
+            @Html.ActionLink("More Info", "Contractor", "Contractors", new
     {
         id = item.Id
-    });
+    })
 
         </div>
     </div>

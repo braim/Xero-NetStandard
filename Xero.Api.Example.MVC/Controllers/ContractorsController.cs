@@ -96,13 +96,49 @@ namespace Xero.Api.Example.MVC.Controllers
         public ActionResult GetContractor(string id)
         {
             var api = XeroApiHelper.AuPayrollApi();
+            var coreapi = XeroApiHelper.CoreApi();
             try
             {
                 //   var organisation = api.FindOrganisationAsync().Result;
 
-                var list = api.Employees.FindAsync(id).Result;
+                var employee = api.Employees.FindAsync(id).Result;
 
-                return View("./Contractor",list);
+                var payrollCalId =employee.PayrollCalendarID;
+
+                var z = employee.PayTemplate.EarningsLines.First().EarningsRateId;
+                var z2 =employee.PayTemplate.SuperLines.First().ExpenseAccountCode;
+                var z3 =employee.PayTemplate.SuperLines.First().LiabilityAccountCode;
+
+                ViewBag.Employee = employee;
+
+                var payitems = api.PayItems.FindAsync().Result;
+                var earnrates = payitems.First().EarningsRates;
+
+                var earnrate = earnrates.Where(r => r.Id == z).FirstOrDefault();
+
+                var earnrate2 = earnrates.Where(r => r.Id == employee.OrdinaryEarningsRateID).FirstOrDefault();
+
+                var z4 = earnrate.RatePerUnit;
+                var z5 =   earnrate.AccountCode;
+
+                ViewBag.EarnRate = earnrate;
+                var query = String.Format("FirstName==\"{0}\" and LastName==\"{1}\"", employee.FirstName, employee.LastName);
+
+                var contact = coreapi.Contacts.Where(query).FindAsync().Result.First();
+
+                ViewBag.Contact = contact;
+                //     ((Payroll.Australia.Model.PayItems)ViewBag.PayItems).EarningsRates[0].AccountCode
+                //  payitems.First().
+
+                //PayrollCalendarID==GUID("65d33765-824c-4fe2-a8c8-b8b3aad7413e")
+                var pcidquery = String.Format("PayrollCalendarID == GUID(\"{0}\")", employee.PayrollCalendarID);
+                var payruns = api.PayRuns.Where(pcidquery).FindAsync().Result;
+                var payrun1 = payruns.First();
+               //payrun1.NetPay;
+                ViewBag.PayRuns = payruns;
+
+
+                return View("./Contractor");
             }
             catch (RenewTokenException e)
             {
@@ -111,5 +147,9 @@ namespace Xero.Api.Example.MVC.Controllers
             }
         }
     }
-    
+
 }
+
+//
+
+ 
